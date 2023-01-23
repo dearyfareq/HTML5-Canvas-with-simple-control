@@ -20,7 +20,9 @@ let isDrawing = false;
 let lastX = 0;
 let lastY = 0;
 let hue = 0;
-let dancing = true
+let bouncing = false;
+let dancing = false;
+let direction = true;
 
 //main drawing function
 function draw(param){
@@ -37,7 +39,6 @@ function draw(param){
     //color dancing section ------------------------------------------
     if(dancing){
         hue++;
-        console.log(dancing);
         if(hue > 360){
             hue = 0;
         }
@@ -46,7 +47,20 @@ function draw(param){
     //color dancing section ------------------------------------------
 
     
-
+    //width bouncing section -----------------------------------------
+    if(bouncing){
+        if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+            direction = !direction;
+          }
+        
+          if(direction) {
+            ctx.lineWidth++;
+          } else {
+            ctx.lineWidth--;
+          }
+        
+    }
+    //width bouncing section -----------------------------------------
 }
 
 //set and fix the origin problem
@@ -80,6 +94,14 @@ canvas.addEventListener('mouseup', () => {isDrawing = false;});
 
 //play the buttons
 clear.addEventListener('click',clearTheCanvas);
+bounce.addEventListener('change', function() {
+    if (this.checked) {
+      bouncing = true;
+    } else {
+        bouncing = false;
+    }
+  });
+
 dance.addEventListener('change', function() {
     if (this.checked) {
       dancing = true;
